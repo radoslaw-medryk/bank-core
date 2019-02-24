@@ -1,0 +1,17 @@
+{
+  "name": "@radoslaw-medryk/bank-core",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/index.js"
+  },
+  "dependencies": {
+    "@radoslaw-medryk/tslint": "^0.1.7",
+    "@types/express": "^4.16.1",
+    "@types/node": "^11.9.5",
+    "express": "^4.16.4",
+    "node": "^11.10.0",
+    "tslint": "^5.13.0",
+    "typescript": "^3.3.3333"
+  }
+}
