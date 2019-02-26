@@ -4,7 +4,7 @@
   "scripts": {
     "init": "sudo docker pull postgres",
     "build": "tsc",
-    "start-node": "tsc && node dist/index.js",
+    "debug": "node --inspect-brk -r ts-node/register src/index.ts",
     "start-postgres": "sudo docker run --name bank-core_postgres -e POSTGRES_PASSWORD=alpine -p 127.0.0.1:5432:5432 postgres"
   },
   "dependencies": {
