@@ -1,5 +1,10 @@
+import { OrmRoot } from "@/orm/OrmRoot";
+
+const orm = OrmRoot.instance;
+
 export const table = (name: string) => {
-    return (constructor: any) => {
-        console.log(`In table name='${name}', constructor='${constructor}'.`);
+    const decorator: ClassDecorator = target => {
+        orm.declareTable(target, name);
     };
+    return decorator;
 };

@@ -1,5 +1,10 @@
-export const row = (type: string) => {
-    return (a: any, b: any) => {
-        console.log(`In row type='${type}', a='${a}', b='${b}'.`);
+import { OrmRoot } from "@/orm/OrmRoot";
+
+const orm = OrmRoot.instance;
+
+export const row = (details?: string) => {
+    const decorator: PropertyDecorator = (target, propertyKey) => {
+        orm.declareRow(target, propertyKey, details);
     };
+    return decorator;
 };

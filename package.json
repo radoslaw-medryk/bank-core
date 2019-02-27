@@ -2,14 +2,15 @@
   "name": "@radoslaw-medryk/bank-core",
   "private": true,
   "scripts": {
-    "init": "sudo docker pull postgres",
     "build": "tsc",
+    "start": "node -r ts-node/register src/index.ts",
     "debug": "node --inspect-brk -r ts-node/register src/index.ts",
-    "start-postgres": "sudo docker run --name bank-core_postgres -e POSTGRES_PASSWORD=alpine -p 127.0.0.1:5432:5432 postgres"
+    "start-postgres": "sudo docker run -i -t --name bank-core_postgres -e POSTGRES_PASSWORD=alpine -p 127.0.0.1:5432:5432 postgres"
   },
   "dependencies": {
     "@radoslaw-medryk/tslint": "^0.1.7",
     "@types/express": "^4.16.1",
+    "@types/module-alias": "^2.0.0",
     "@types/node": "^11.9.5",
     "express": "^4.16.4",
     "express-async-handler": "^1.1.4",
@@ -22,8 +23,5 @@
   },
   "devDependencies": {
     "ts-node": "^8.0.2"
-  },
-  "_moduleAliases": {
-    "@"  : "dist"
   }
 }
