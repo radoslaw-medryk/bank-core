@@ -1,5 +1,5 @@
 import { TableDeclaration } from "@/orm/TableDeclaration";
-import { ClassConstructor } from "./primitives";
+import { ClassConstructor, WithStaticSql } from "./primitives";
 
 export class OrmRoot {
     public static readonly instance: OrmRoot = new OrmRoot();
@@ -7,30 +7,33 @@ export class OrmRoot {
     public declarations: TableDeclaration[] = [];
 
     public declareTable = (classConstructor: ClassConstructor, name: string) => {
-        const table = this.findTable(classConstructor);
+        let table = this.findTable(classConstructor);
+        if (!table) {
+            table = this.newTable(classConstructor);
+        }
+
+        table.setName(name);
+
+        const sql = (classConstructor as WithStaticSql).sql;
+        if (sql) {
+            table.setDetails(sql);
+        }
 
         // TODO [RM]: handle duplicated declarations for the same table
-
-        if (table) {
-            table.setName(name);
-        } else {
-            this.addTable(classConstructor, name);
-        }
+        // TODO [RM]: handle table name duplicates
     }
 
     public declareRow = (target: object, propertyKey: string | symbol, details?: string) => {
+        const classConstructor = target.constructor;
         const rowName = propertyKey as string; // TODO [RM]: handle symbol type here
 
-        const classConstructor = target.constructor;
-        const table = this.findTable(classConstructor);
+        let table = this.findTable(classConstructor);
+        if (!table) {
+            table = this.newTable(classConstructor);
+        }
+        table.addRow(rowName, details);
 
         // TODO [RM]: handle duplicated declarations for the same property or property name duplicates
-
-        if (table) {
-            table.addRow(rowName, details);
-        } else {
-            this.addTableWithRow(classConstructor, rowName, details);
-        }
     }
 
     private findTable = (classConstructor: ClassConstructor): TableDeclaration | undefined => {
@@ -39,23 +42,14 @@ export class OrmRoot {
             [0];
     }
 
-    private addTable = (classConstructor: ClassConstructor, tableName: string) => {
+    private newTable = (classConstructor: ClassConstructor): TableDeclaration => {
         const newTable = new TableDeclaration(classConstructor);
-        newTable.setName(tableName);
 
         this.declarations = [
             ...this.declarations,
             newTable,
         ];
-    }
 
-    private addTableWithRow = (classConstructor: ClassConstructor, rowName: string, details?: string) => {
-        const newTable = new TableDeclaration(classConstructor);
-        newTable.addRow(rowName, details);
-
-        this.declarations = [
-            ...this.declarations,
-            newTable,
-        ];
+        return newTable;
     }
 }

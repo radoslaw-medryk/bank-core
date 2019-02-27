@@ -5,6 +5,7 @@ export class TableDeclaration {
     public classConstructor: ClassConstructor;
     public name?: string;
     public rows: RowDeclaration[] = [];
+    public details?: string;
 
     constructor(classConstructor: ClassConstructor) {
         this.classConstructor = classConstructor;
@@ -19,5 +20,9 @@ export class TableDeclaration {
 
     public setName = (name: string) => {
         this.name = name;
+    }
+
+    public setDetails = (details: string) => {
+        this.details = details;
     }
 }
