@@ -1,13 +1,12 @@
-import { table } from "@/orm/table";
-import { row } from "@/orm/row";
+import { table, column } from "declaro";
 
 export const Accounts = "Accounts";
 
 @table(Accounts)
 export class Account {
-    @row("serial PRIMARY KEY")
-    public id?: number = undefined;
+    @column({ type: "serial", primaryKey: true })
+    public id?: number = 0;
 
-    @row("number NOT NULL")
-    public balance?: number = undefined;
+    @column({ type: "numeric", notNull: true })
+    public balance: number = 0;
 }

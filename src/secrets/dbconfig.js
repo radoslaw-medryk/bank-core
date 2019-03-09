@@ -7,7 +7,4 @@ module.exports = {
         password: "alpine",
         database: "test",
     },
-    seeds: {
-        directory: "./db/seeds",
-    },
 };

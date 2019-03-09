@@ -1,20 +1,14 @@
-import { table } from "@/orm/table";
-import { row } from "@/orm/row";
-import { Users } from "./User";
-import { Accounts } from "./Account";
+import { table, column } from "declaro";
+import { Account } from "./Account";
+import { User } from "./User";
 
 export const UserAccounts = "UserAccounts";
 
 @table(UserAccounts)
 export class UserAccount {
-    @row("integer NOT NULL")
-    public userId?: number = undefined;
+    @column({ type: "integer", foreignKey: User })
+    public userId: number = 0;
 
-    @row("integer NOT NULL")
-    public accountId?: number = undefined;
-
-    public static sql = `
-        CONSTRAINT userId_FK FOREIGN KEY (userId) REFERENCES ${Users}
-        CONSTRAINT accountId_FK FOREIGN KEY (accountId) REFERENCES ${Accounts}
-    `;
+    @column({ type: "integer", foreignKey: Account })
+    public accountId: number = 0;
 }

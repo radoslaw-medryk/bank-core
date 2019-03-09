@@ -1,5 +1,11 @@
 require("./registerAlias");
+import { initDb } from "./initDb";
 
-require("@/orm/index");
+const main = async () => {
+    await initDb();
 
-console.log("END");
+    console.log("END");
+    process.exit();
+};
+
+(async () => await main())();

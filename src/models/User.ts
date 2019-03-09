@@ -1,13 +1,12 @@
-import { table } from "@/orm/table";
-import { row } from "@/orm/row";
+import { table, column } from "declaro";
 
 export const Users = "Users";
 
 @table(Users)
 export class User {
-    @row("serial PRIMARY KEY")
-    public id?: number = undefined;
+    @column({ type: "serial", primaryKey: true })
+    public id?: number = 0;
 
-    @row("varchar(64) NOT NULL")
-    public name?: string = undefined;
+    @column({ type: "varchar(64)", notNull: true })
+    public name: string = "";
 }
