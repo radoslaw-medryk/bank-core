@@ -1,11 +1,10 @@
 require("./registerAlias");
-import { initDb } from "./initDb";
+import { init } from "@/db/init";
+import { startServer } from "@/server";
 
 const main = async () => {
-    await initDb();
-
-    console.log("END");
-    process.exit();
+    await init();
+    startServer();
 };
 
 (async () => await main())();

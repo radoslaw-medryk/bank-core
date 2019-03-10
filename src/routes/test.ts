@@ -1,5 +1,14 @@
-import handler from "express-async-handler";
+import { router } from "@/server";
 
-export const _default = handler(async (req, res) => {
-    //
+const r = router.prefix("/api/v1/test");
+
+r.get("/", ctx => {
+    ctx.body = "Hello and welocome to root route!";
+});
+
+r.get("/smth/:id", ctx => {
+    ctx.body = {
+        request: "smth",
+        id: ctx.params.id,
+    };
 });

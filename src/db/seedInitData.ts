@@ -1,0 +1,3 @@
+const seedInitData = async () => {
+    //
+};
