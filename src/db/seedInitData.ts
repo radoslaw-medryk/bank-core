@@ -1,3 +1,3 @@
-const seedInitData = async () => {
+export const seedInitData = async () => {
     //
 };

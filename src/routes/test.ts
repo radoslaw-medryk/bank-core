@@ -2,6 +2,8 @@ import { router } from "@/server";
 
 const r = router.prefix("/api/v1/test");
 
+// TODO [RM]: validation
+
 r.get("/", ctx => {
     ctx.body = "Hello and welocome to root route!";
 });
