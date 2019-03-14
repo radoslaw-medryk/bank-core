@@ -3,5 +3,8 @@
 const dbconfig = require("./src/secrets/dbconfig");
 
 module.exports = {
-    development: dbconfig,
+    development: {
+        client: "pg",
+        connection: dbconfig,
+    },
 };

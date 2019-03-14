@@ -1,9 +1,7 @@
-import knex from "knex";
+import { createPool } from "slonik";
 const dbconfig = require("@/secrets/dbconfig");
 
-export const db = knex(dbconfig);
+const { user, password, host, port, database } = dbconfig;
+const connectionStr = `postgres://${user}:${password}@${host}:${port}/${database}`;
 
-// TODO [RM]: debug only
-db.on("query", (query: any) => {
-    console.log("SQL:", query.sql);
-});
+export const pool = createPool(connectionStr);
