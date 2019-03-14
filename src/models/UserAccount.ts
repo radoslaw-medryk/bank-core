@@ -15,7 +15,7 @@ const t = UserAccount.table;
 const p = UserAccount.props;
 
 export const createSql = sql`
-    DROP TABLE IF EXISTS ${t} CASCADE;    
+    DROP TABLE IF EXISTS ${t} CASCADE;
     CREATE TABLE ${t} (
         ${p.userId} integer REFERENCES ${User.table},
         ${p.accountId} integer REFERENCES ${Account.table}

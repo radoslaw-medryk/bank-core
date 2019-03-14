@@ -18,10 +18,7 @@ const main = async () => {
     await initDb();
     startServer();
 
-    const a = await accountDbService.createAccount();
-    const b = await accountDbService.createAccount();
-
-    await accountDbService.transfer(a, b, new Decimal(10));
+    await accountDbService.transfer(1, 2, new Decimal(10));
 };
 
 (async () => await main())();
