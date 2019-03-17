@@ -18,7 +18,7 @@ const main = async () => {
     await initDb();
     startServer();
 
-    await accountDbService.transfer(1, 2, new Decimal(10));
+    await accountDbService.transfer(1, 2, new Decimal(20));
 };
 
 (async () => await main())();

@@ -9,11 +9,16 @@ import { sqlx } from "slonix";
 
 export const initDb = async () => {
     const models = requireDir("../models", { recurse: true });
+    const stored = requireDir("../stored", { recurse: true });
+    const dirs = [models, stored];
+
     await pool.transaction(async t => {
-        for (const path in models) {
-            const model = models[path];
-            if (model.createSql) {
-                await sqlx.query(t, model.createSql);
+        for (const dir of dirs) {
+            for (const path in dir) {
+                const values = dir[path];
+                if (values.createSql) {
+                    await sqlx.query(t, values.createSql);
+                }
             }
         }
     });

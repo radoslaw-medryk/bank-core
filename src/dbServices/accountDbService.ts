@@ -3,6 +3,7 @@ import { pool } from "@/db";
 import { AccountId } from "@/models/Account";
 import Decimal from "decimal.js";
 import { sqlx } from "slonix";
+import { transfer } from "@/stored/transfer";
 
 class AccountDbService {
     public createAccount = async (): Promise<AccountId> => {
@@ -12,8 +13,8 @@ class AccountDbService {
     };
 
     public transfer = async (fromId: AccountId, toId: AccountId, amount: Decimal) => {
-        const sql = accountSql.transfer(fromId, toId, amount);
-        await sqlx.query(pool, sql, { usePreparedStatement: false });
+        const sql = transfer(fromId, toId, amount);
+        await sqlx.query(pool, sql);
     };
 }
 
