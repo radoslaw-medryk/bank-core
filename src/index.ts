@@ -2,10 +2,10 @@ require("./registerAlias");
 import { initDb } from "@/db/initDb";
 import { startServer } from "@/server";
 import Decimal from "decimal.js";
-import { Sqlx } from "slonix";
 import { accountDbService } from "./dbServices/accountDbService";
+import { sqlx } from "slonix";
 
-Sqlx.registerProcessor({
+sqlx.registerProcessor({
     predicate: value => value instanceof Decimal,
     process: value => ({
         value: value.toString(),

@@ -1,5 +1,4 @@
-import { sql } from "slonik";
-import { propsDefinition, tableDefinition } from "slonix";
+import { propsDefinition, tableDefinition, sqlx } from "slonix";
 import Decimal from "decimal.js";
 
 export type AccountId = number;
@@ -15,7 +14,7 @@ export class Account {
 const t = Account.table;
 const p = Account.props;
 
-export const createSql = sql`
+export const createSql = sqlx`
     DROP TABLE IF EXISTS ${t} CASCADE;
     CREATE TABLE ${t} (
         ${p.id} serial PRIMARY KEY,

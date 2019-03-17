@@ -25,7 +25,7 @@
         "pg-promise": "^8.6.3",
         "require-dir": "^1.2.0",
         "slonik": "^16.10.0",
-        "slonix": "^0.1.2",
+        "slonix": "^0.1.5",
         "tslint": "^5.13.0",
         "typescript": "^3.3.3333"
     },

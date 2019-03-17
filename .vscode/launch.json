@@ -9,10 +9,7 @@
             "request": "launch",
             "name": "Launch",
             "runtimeExecutable": "npm",
-            "runtimeArgs": [
-                "run",
-                "debug"
-            ],
+            "runtimeArgs": ["run", "debug", "--preserve-symlinks", "--preserve-symlinks-main"],
             "port": 9229
         },
         {
