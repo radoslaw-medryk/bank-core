@@ -1,15 +1,15 @@
 import { sqlx, SqlxQuery } from "slonix";
-import { AccountId, Account } from "@/models/Account";
+import { AccountDbId, AccountDb } from "@/db/models/AccountDb";
 import { Decimal } from "decimal.js";
 import { sql } from "slonik";
 import { storedFunction } from "../helpers/storedFunction";
-import { Transfer } from "@/models/Transfer";
+import { TransferDb } from "@/db/models/TransferDb";
 
-const AccountT = Account.table;
-const AccountP = Account.props;
+const AccountT = AccountDb.table;
+const AccountP = AccountDb.props;
 
-const TransferT = Transfer.table;
-const TransferP = Transfer.props;
+const TransferT = TransferDb.table;
+const TransferP = TransferDb.props;
 
 const name = sql.identifier(["transfer"]);
 
@@ -28,6 +28,6 @@ export const createSql = storedFunction({
     END;
 `;
 
-export const transfer = (fromId: AccountId, toId: AccountId, amount: Decimal): SqlxQuery => {
+export const transfer = (fromId: AccountDbId, toId: AccountDbId, amount: Decimal): SqlxQuery => {
     return sqlx`SELECT * FROM ${name}(fromId => ${fromId}, toId => ${toId}, amount => ${amount});`;
 };

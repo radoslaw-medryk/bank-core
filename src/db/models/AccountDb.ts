@@ -1,21 +1,21 @@
 import { propsDefinition, tableDefinition, sqlx } from "slonix";
 import Decimal from "decimal.js";
 import { QueryResultRowType } from "slonik";
-import { toNumber } from "@/helpers/toNumber";
-import { toDecimal } from "@/helpers/toDecimal";
+import { toNumber } from "@/db/helpers/toNumber";
+import { toDecimal } from "@/db/helpers/toDecimal";
 
-export type AccountId = number;
+export type AccountDbId = number;
 
-export class Account {
-    public id: AccountId = 0;
+export class AccountDb {
+    public id: AccountDbId = 0;
     public balance: Decimal = new Decimal(0);
 
     public static table = tableDefinition("Accounts");
-    public static props = propsDefinition(Account);
+    public static props = propsDefinition(AccountDb);
 }
 
-const t = Account.table;
-const p = Account.props;
+const t = AccountDb.table;
+const p = AccountDb.props;
 
 export const createSql = sqlx`
     DROP TABLE IF EXISTS ${t} CASCADE;
@@ -25,7 +25,7 @@ export const createSql = sqlx`
     );
 `;
 
-export const accountFromRow = (row: QueryResultRowType<keyof Account>): Account => {
+export const accountFromRow = (row: QueryResultRowType<keyof AccountDb>): AccountDb => {
     return {
         id: toNumber(row.id),
         balance: toDecimal(row.balance),

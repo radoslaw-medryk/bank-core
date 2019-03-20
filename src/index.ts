@@ -1,8 +1,8 @@
 require("./registerAlias");
 import { initDb } from "@/db/initDb";
-import { startServer } from "@/server";
+import { startServer } from "@/api/server";
 import Decimal from "decimal.js";
-import { accountDbService } from "./dbServices/accountDbService";
+import { accountDbService } from "@/db/services/accountDbService";
 import { sqlx } from "slonix";
 
 sqlx.registerProcessor({

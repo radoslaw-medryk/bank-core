@@ -7,7 +7,7 @@ export const koa = new Koa();
 export const router = new Router();
 
 export const startServer = () => {
-    require("@/routes");
+    require("./routes");
     koa.use(router.routes());
     koa.use(router.allowedMethods());
 

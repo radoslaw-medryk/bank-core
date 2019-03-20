@@ -1,4 +1,4 @@
-import { accountDbService } from "@/dbServices/accountDbService";
+import { accountDbService } from "./services/accountDbService";
 
 export const seedTestData = async () => {
     await accountDbService.createAccount();

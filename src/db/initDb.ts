@@ -8,8 +8,8 @@ import { sqlx } from "slonix";
 // TODO [RM]: for DEV purposes only. For production needed different behavior.
 
 export const initDb = async () => {
-    const models = requireDir("../models", { recurse: true });
-    const stored = requireDir("../stored", { recurse: true });
+    const models = requireDir("./models", { recurse: true });
+    const stored = requireDir("./stored", { recurse: true });
     const dirs = [models, stored];
 
     await pool.transaction(async t => {

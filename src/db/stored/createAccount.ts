@@ -1,10 +1,10 @@
 import { sqlx, SqlxQuery } from "slonix";
 import { storedFunction } from "../helpers/storedFunction";
-import { Account } from "@/models/Account";
+import { AccountDb } from "@/db/models/AccountDb";
 import { sql } from "slonik";
 
-const AccountT = Account.table;
-const AccountP = Account.props;
+const AccountT = AccountDb.table;
+const AccountP = AccountDb.props;
 
 const name = sql.identifier(["createAccount"]);
 

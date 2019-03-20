@@ -1,10 +1,10 @@
 import { sqlx } from "slonix";
-import { storedFunction } from "@/helpers/storedFunction";
+import { storedFunction } from "@/db/helpers/storedFunction";
 import { sql } from "slonik";
-import { Account, AccountId } from "@/models/Account";
+import { AccountDb, AccountDbId } from "@/db/models/AccountDb";
 
-const AccountT = Account.table;
-const AccountP = Account.props;
+const AccountT = AccountDb.table;
+const AccountP = AccountDb.props;
 
 const name = sql.identifier(["getAccount"]);
 
@@ -17,6 +17,6 @@ export const createSql = storedFunction({
     SELECT * FROM ${AccountT} WHERE ${AccountP.id} = accountId;
 `;
 
-export const getAccount = (accountId: AccountId) => {
+export const getAccount = (accountId: AccountDbId) => {
     return sqlx`SELECT * FROM ${name}(accountId => ${accountId})`;
 };
