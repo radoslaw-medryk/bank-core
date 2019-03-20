@@ -1,6 +1,9 @@
 import { AccountId, Account } from "./Account";
 import Decimal from "decimal.js";
 import { tableDefinition, propsDefinition, sqlx } from "slonix";
+import { QueryResultRowType } from "slonik";
+import { toNumber } from "@/helpers/toNumber";
+import { toDecimal } from "@/helpers/toDecimal";
 
 export type TransferId = number;
 
@@ -26,3 +29,12 @@ export const createSql = sqlx`
         ${p.amount} numeric NOT NULL
     );
 `;
+
+export const transferFromRow = (row: QueryResultRowType<keyof Transfer>): Transfer => {
+    return {
+        id: toNumber(row.id),
+        fromId: toNumber(row.fromId),
+        toId: toNumber(row.toId),
+        amount: toDecimal(row.amount),
+    };
+};

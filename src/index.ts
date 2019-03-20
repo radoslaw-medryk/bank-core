@@ -18,7 +18,11 @@ const main = async () => {
     await initDb();
     startServer();
 
-    await accountDbService.transfer(1, 2, new Decimal(20));
+    const t = await accountDbService.transfer(1, 2, new Decimal(20));
+    console.log("transferId", t);
+    const a1 = await accountDbService.getAccount(1);
+    const a2 = await accountDbService.getAccount(2);
+    console.log("a1", a1.toString(), "a2", a2.toString());
 };
 
 (async () => await main())();

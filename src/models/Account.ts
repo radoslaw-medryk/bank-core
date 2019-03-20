@@ -1,5 +1,8 @@
 import { propsDefinition, tableDefinition, sqlx } from "slonix";
 import Decimal from "decimal.js";
+import { QueryResultRowType } from "slonik";
+import { toNumber } from "@/helpers/toNumber";
+import { toDecimal } from "@/helpers/toDecimal";
 
 export type AccountId = number;
 
@@ -21,3 +24,10 @@ export const createSql = sqlx`
         ${p.balance} numeric NOT NULL DEFAULT 0
     );
 `;
+
+export const accountFromRow = (row: QueryResultRowType<keyof Account>): Account => {
+    return {
+        id: toNumber(row.id),
+        balance: toDecimal(row.balance),
+    };
+};
