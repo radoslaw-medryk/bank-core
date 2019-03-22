@@ -1,9 +1,9 @@
 import { AccountDbId, AccountDb } from "./AccountDb";
-import Decimal from "decimal.js";
 import { tableDefinition, propsDefinition, sqlx } from "slonix";
 import { QueryResultRowType } from "slonik";
-import { toNumber } from "@/db/helpers/toNumber";
-import { toDecimal } from "@/db/helpers/toDecimal";
+import { toNumber } from "@/helpers/toNumber";
+import { toBig } from "@/helpers/toBig";
+import Big from "big.js";
 
 export type TransferDbId = number;
 
@@ -11,7 +11,7 @@ export class TransferDb {
     public id: TransferDbId = 0;
     public fromId: AccountDbId = 0;
     public toId: AccountDbId = 0;
-    public amount: Decimal = new Decimal(0);
+    public amount: Big = new Big(0);
 
     public static table = tableDefinition("Transfers");
     public static props = propsDefinition(TransferDb);
@@ -35,6 +35,6 @@ export const transferFromRow = (row: QueryResultRowType<keyof TransferDb>): Tran
         id: toNumber(row.id),
         fromId: toNumber(row.fromId),
         toId: toNumber(row.toId),
-        amount: toDecimal(row.amount),
+        amount: toBig(row.amount),
     };
 };

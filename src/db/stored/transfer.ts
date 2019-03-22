@@ -1,9 +1,9 @@
 import { sqlx, SqlxQuery } from "slonix";
 import { AccountDbId, AccountDb } from "@/db/models/AccountDb";
-import { Decimal } from "decimal.js";
 import { sql } from "slonik";
 import { storedFunction } from "../helpers/storedFunction";
 import { TransferDb } from "@/db/models/TransferDb";
+import Big from "big.js";
 
 const AccountT = AccountDb.table;
 const AccountP = AccountDb.props;
@@ -28,6 +28,6 @@ export const createSql = storedFunction({
     END;
 `;
 
-export const transfer = (fromId: AccountDbId, toId: AccountDbId, amount: Decimal): SqlxQuery => {
+export const transfer = (fromId: AccountDbId, toId: AccountDbId, amount: Big): SqlxQuery => {
     return sqlx`SELECT * FROM ${name}(fromId => ${fromId}, toId => ${toId}, amount => ${amount});`;
 };

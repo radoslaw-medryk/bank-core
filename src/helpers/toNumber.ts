@@ -1,6 +1,4 @@
-import { QueryResultRowColumnType } from "slonik";
-
-export const toNumber = (value: QueryResultRowColumnType): number => {
+export const toNumber = (value: string | number): number => {
     if (typeof value === "number") {
         return value;
     }

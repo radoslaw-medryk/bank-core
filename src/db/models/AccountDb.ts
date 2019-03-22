@@ -1,14 +1,14 @@
 import { propsDefinition, tableDefinition, sqlx } from "slonix";
-import Decimal from "decimal.js";
 import { QueryResultRowType } from "slonik";
-import { toNumber } from "@/db/helpers/toNumber";
-import { toDecimal } from "@/db/helpers/toDecimal";
+import { Big } from "big.js";
+import { toNumber } from "@/helpers/toNumber";
+import { toBig } from "@/helpers/toBig";
 
 export type AccountDbId = number;
 
 export class AccountDb {
     public id: AccountDbId = 0;
-    public balance: Decimal = new Decimal(0);
+    public balance: Big = new Big(0);
 
     public static table = tableDefinition("Accounts");
     public static props = propsDefinition(AccountDb);
@@ -28,6 +28,6 @@ export const createSql = sqlx`
 export const accountFromRow = (row: QueryResultRowType<keyof AccountDb>): AccountDb => {
     return {
         id: toNumber(row.id),
-        balance: toDecimal(row.balance),
+        balance: toBig(row.balance),
     };
 };

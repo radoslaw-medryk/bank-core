@@ -1,5 +1,6 @@
 import { AccountId } from "./Account";
-import Decimal from "decimal.js";
+import { TransferDb } from "@/db/models/TransferDb";
+import Big from "big.js";
 
 export type TransferId = number;
 
@@ -27,5 +28,12 @@ export type Transfer = {
     id: TransferId;
     fromId: AccountId;
     toId: AccountId;
-    amount: Decimal;
+    amount: Big;
 };
+
+export const transferFromDbModel = (transferDb: TransferDb): Transfer => ({
+    id: transferDb.id,
+    fromId: transferDb.fromId,
+    toId: transferDb.toId,
+    amount: transferDb.amount,
+});

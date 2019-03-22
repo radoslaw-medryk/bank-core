@@ -8,6 +8,7 @@ import { sqlx } from "slonix";
 // TODO [RM]: for DEV purposes only. For production needed different behavior.
 
 export const initDb = async () => {
+    require("./registerSqlxProcessor");
     const models = requireDir("./models", { recurse: true });
     const stored = requireDir("./stored", { recurse: true });
     const dirs = [models, stored];
