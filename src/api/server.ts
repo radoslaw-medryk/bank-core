@@ -9,8 +9,8 @@ export const router = new Router();
 
 export const startServer = () => {
     require("./routes");
-    koa.use(router.routes());
     koa.use(koaBody());
+    koa.use(router.routes());
     koa.use(router.allowedMethods());
 
     koa.listen(port, () => {

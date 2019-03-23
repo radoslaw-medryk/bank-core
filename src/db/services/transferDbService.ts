@@ -9,6 +9,11 @@ import Big from "big.js";
 
 class TransferDbService {
     public transfer = async (fromId: AccountDbId, toId: AccountDbId, amount: Big): Promise<TransferDbId> => {
+        if (fromId === toId) {
+            // TODO [RM]: throw proper error
+            throw new Error("fromId === toId");
+        }
+
         const sql = transfer(fromId, toId, amount);
         const transferId = await sqlx.oneFirst(pool, sql);
         return toNumber(transferId);

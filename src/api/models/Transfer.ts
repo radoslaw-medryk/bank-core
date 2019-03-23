@@ -31,6 +31,7 @@ export type Transfer = {
     amount: Big;
 };
 
+// TODO [RM]: move somewhere else
 export const transferFromDbModel = (transferDb: TransferDb): Transfer => ({
     id: transferDb.id,
     fromId: transferDb.fromId,
