@@ -2,8 +2,9 @@ import { AccountDb } from "@/db/models/AccountDb";
 import { ValidationResult } from "../validation/ValidationResult";
 import { ValidationError } from "../validation/errors/ValidationError";
 import { missingValueError } from "../validation/errors/MissingValueError";
-import { getPropsValueMissing } from "../validation/checks/getPropsValueMissing";
+import { getPropsValueMissingKeys } from "../validation/checks/getPropsValueMissingKeys";
 import Big from "big.js";
+import { getPropsValueMissingErrors } from "../helpers/getPropsValueMissingErrors";
 
 export type AccountId = number;
 
@@ -42,8 +43,7 @@ export const validateAccount = (value: any): ValidationResult => {
     const valueAsAccount = value as Account;
 
     const requiredProps: Array<keyof Account> = ["id", "balance"];
-    const missingProps = getPropsValueMissing(valueAsAccount, requiredProps);
-    errors = [...errors, ...missingProps.map(key => missingValueError(key, valueAsAccount[key]))];
+    errors = [...errors, ...getPropsValueMissingErrors(valueAsAccount, requiredProps)];
 
     // TODO [RM]: Add more checks
     throw new Error("Not implemented");
