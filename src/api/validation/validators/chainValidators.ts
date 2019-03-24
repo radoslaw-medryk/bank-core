@@ -4,9 +4,10 @@ import { ValidationError } from "../errors/ValidationError";
 import { ValidationMultiError, ValidationMultiErrorType } from "../errors/ValidationMultiError";
 import { noError } from "../helpers/noError";
 
-const validationMultiError = <T>(errors: ValidationError[]): ValidationResult => {
+const validationMultiError = <T>(errors: ValidationError[], key?: string): ValidationResult => {
     const error: ValidationMultiError = {
         type: ValidationMultiErrorType,
+        key: key,
         errors: errors,
     };
 
@@ -15,9 +16,9 @@ const validationMultiError = <T>(errors: ValidationError[]): ValidationResult =>
     };
 };
 
-export const chainValidators = <T>(value: T, validators: ValidationFunc<T>[], key?: string): ValidationResult => {
+export const chainValidators = <T>(value: T, validators: ValidationFunc<T, any>[], key?: string): ValidationResult => {
     const errors = validators
-        .map(func => func(value))
+        .map(func => func(value, key))
         .map(q => q.error)
         .filter(q => q !== undefined) as ValidationError[];
 
@@ -28,7 +29,7 @@ export const chainValidators = <T>(value: T, validators: ValidationFunc<T>[], ke
     }
 
     if (errors.length > 1) {
-        return validationMultiError(errors);
+        return validationMultiError(errors, key);
     }
 
     return noError();

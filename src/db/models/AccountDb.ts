@@ -1,8 +1,8 @@
 import { propsDefinition, tableDefinition, sqlx } from "slonix";
 import { QueryResultRowType } from "slonik";
 import { Big } from "big.js";
-import { toNumber } from "@/helpers/toNumber";
-import { toBig } from "@/helpers/toBig";
+import { toNumber } from "@/db/helpers/toNumber";
+import { toBig } from "@/db/helpers/toBig";
 
 export type AccountDbId = number;
 

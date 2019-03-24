@@ -3,7 +3,7 @@ import { AccountDbId } from "@/db/models/AccountDb";
 import { sqlx } from "slonix";
 import { transfer } from "../stored/transfer";
 import { TransferDbId, TransferDb, transferFromRow } from "@/db/models/TransferDb";
-import { toNumber } from "@/helpers/toNumber";
+import { toNumber } from "@/db/helpers/toNumber";
 import { getTransfer } from "@/db/stored/getTransfer";
 import Big from "big.js";
 

@@ -8,10 +8,11 @@ import { parseBig } from "./parseBig";
 import { parseProp } from "../helpers/parseProp";
 import { combineParseErrors } from "../helpers/combineParseErrors";
 import { failedParseProps } from "../helpers/failedParseProps";
+import { missingValueError } from "../helpers/missingValueError";
 
 export const parsePerformTransferRequest = (value: any, key?: string): ParseResult<PerformTransferRequest> => {
     if (value === null || value === undefined) {
-        return failedParseObject(key);
+        return missingValueError(key);
     }
 
     if (typeof value !== "object") {

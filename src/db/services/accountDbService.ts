@@ -2,7 +2,7 @@ import { pool } from "@/db";
 import { AccountDbId, accountFromRow, AccountDb } from "@/db/models/AccountDb";
 import { sqlx } from "slonix";
 import { createAccount } from "@/db/stored/createAccount";
-import { toNumber } from "@/helpers/toNumber";
+import { toNumber } from "@/db/helpers/toNumber";
 import { getAccount } from "@/db/stored/getAccount";
 
 class AccountDbService {

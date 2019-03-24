@@ -1,10 +1,12 @@
 import { router } from "@/api/server";
-import { PerformTransferRequest } from "../models/PerformTransferRequest";
 import { transferDbService } from "@/db/services/transferDbService";
 import { transferFromDbModel } from "../models/Transfer";
 import { parsePerformTransferRequest } from "../parsing/parsers/parsePerformTransferRequest";
 import { isFailedParseResult } from "../parsing/ParseResult";
 import { validatePerformTransferRequest } from "../validation/validators/validatePerformTransferRequest";
+import { parseToApiErrors } from "../helpers/parseToApiErrors";
+import { apiErrorResponse } from "../helpers/apiErrorResponse";
+import { validationToApiErrors } from "../helpers/validationToApiErrors";
 
 const r = router.prefix("/api/v1/transfers");
 
@@ -23,13 +25,15 @@ r.post("/", async ctx => {
     // TODOc [RM]: make generic parse+validate function
     const parsedRequest = parsePerformTransferRequest(ctx.request.body);
     if (isFailedParseResult(parsedRequest)) {
-        ctx.body = { errorType: "parsing", error: parsedRequest.error }; // TODO [RM]: temp only, for tests
+        const apiErrors = parseToApiErrors(parsedRequest.error);
+        ctx.body = apiErrorResponse(apiErrors);
         return;
     }
 
-    const validationResult = validatePerformTransferRequest(parsedRequest.value);
+    const validationResult = validatePerformTransferRequest(parsedRequest.value, undefined);
     if (validationResult.error) {
-        ctx.body = { errorType: "validation", error: validationResult.error }; // TODO [RM]: temp only, for tests
+        const apiErrors = validationToApiErrors(validationResult.error);
+        ctx.body = apiErrorResponse(apiErrors);
         return;
     }
 

@@ -8,17 +8,31 @@ import { noError } from "../helpers/noError";
 import { Big } from "big.js";
 import { chainValidators } from "./chainValidators";
 import { validateCurrency } from "./validateCurrency";
+import { validateProp } from "../helpers/validateProp";
+import { ValidationFunc } from "../ValidationFunc";
 
-export const validatePerformTransferRequest = (value: PerformTransferRequest): ValidationResult => {
-    const validateFromId = validateNumberId(value.fromId);
-    const validateToId = validateNumberId(value.toId);
-    const validateAmount = chainValidators(value.amount, [
-        amount => validateBigRange(amount, { minValue: new Big(0) }),
-        amount => validateCurrency(amount),
-    ]);
+const validateAmount = (value: Big, rule?: undefined, key?: string) => {
+    return chainValidators(
+        value,
+        [
+            amount => validateBigRange(amount, { minValue: new Big("0.01") }, key),
+            amount => validateCurrency(amount, undefined, key),
+        ],
+        key
+    );
+};
 
-    if (validateFromId.error || validateToId.error || validateAmount.error) {
-        const errors = combineValidationErrors(validateFromId, validateToId, validateAmount);
+export const validatePerformTransferRequest: ValidationFunc<PerformTransferRequest, undefined> = (
+    value: PerformTransferRequest,
+    rule?: undefined,
+    key?: string
+): ValidationResult => {
+    const validatedFromId = validateProp(value, "fromId", validateNumberId, undefined);
+    const validatedToId = validateProp(value, "toId", validateNumberId, undefined);
+    const validatedAmount = validateProp(value, "amount", validateAmount, undefined);
+
+    if (validatedFromId.error || validatedToId.error || validatedAmount.error) {
+        const errors = combineValidationErrors(validatedFromId, validatedToId, validatedAmount);
         return failedValidateProps(errors);
     }
 

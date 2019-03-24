@@ -1,10 +1,11 @@
 import { failedParseObject } from "../helpers/failedParseObject";
 import { successfulParse } from "../helpers/successfulParse";
 import { ParseFunc } from "../ParseFunc";
+import { missingValueError } from "../helpers/missingValueError";
 
 export const parseNumber: ParseFunc<number> = (value: any, key?: string) => {
     if (value === null || value === undefined) {
-        return failedParseObject(key);
+        return missingValueError(key);
     }
 
     if (typeof value !== "number") {

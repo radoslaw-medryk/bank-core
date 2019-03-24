@@ -2,10 +2,11 @@ import { failedParseObject } from "../helpers/failedParseObject";
 import { successfulParse } from "../helpers/successfulParse";
 import Big from "big.js";
 import { ParseFunc } from "../ParseFunc";
+import { missingValueError } from "../helpers/missingValueError";
 
 export const parseBig: ParseFunc<Big> = (value: any, key?: string) => {
     if (value === null || value === undefined) {
-        return failedParseObject(key);
+        return missingValueError(key);
     }
 
     if (typeof value !== "string") {

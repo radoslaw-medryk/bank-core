@@ -1,8 +1,8 @@
 import { AccountDbId, AccountDb } from "./AccountDb";
 import { tableDefinition, propsDefinition, sqlx } from "slonix";
 import { QueryResultRowType } from "slonik";
-import { toNumber } from "@/helpers/toNumber";
-import { toBig } from "@/helpers/toBig";
+import { toNumber } from "@/db/helpers/toNumber";
+import { toBig } from "@/db/helpers/toBig";
 import Big from "big.js";
 
 export type TransferDbId = number;

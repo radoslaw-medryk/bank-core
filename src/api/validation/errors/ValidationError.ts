@@ -4,6 +4,7 @@ import { BigRangeError } from "./BigRangeError";
 import { ValidationPropsError } from "./ValidationPropsError";
 import { BigQuantError } from "./BigQuantError";
 import { ValidationMultiError } from "./ValidationMultiError";
+import { NumberIntegerError } from "./NumberIntegerError";
 
 export type ValidationErrorBase = {
     key?: string;
@@ -15,4 +16,5 @@ export type ValidationError =
     | BigRangeError
     | ValidationPropsError
     | BigQuantError
-    | ValidationMultiError;
+    | ValidationMultiError
+    | NumberIntegerError;
