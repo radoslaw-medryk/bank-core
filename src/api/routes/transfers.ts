@@ -1,7 +1,7 @@
 import { router } from "@/api/server";
 import { transferDbService } from "@/db/services/transferDbService";
 import { transferFromDbModel } from "../models/Transfer";
-import { apiErrorResponse } from "../helpers/apiErrorResponse";
+import { responseApiErrors } from "../helpers/responseApiErrors";
 import { checkPerformTransferRequest } from "../checks/checkPerformTransferRequest";
 
 const r = router.prefix("/api/v1/transfers");
@@ -20,7 +20,7 @@ r.get("/:id", async ctx => {
 r.post("/", async ctx => {
     const parsedAndValidated = checkPerformTransferRequest(ctx.request.body);
     if (parsedAndValidated.errors) {
-        ctx.body = apiErrorResponse(parsedAndValidated.errors);
+        responseApiErrors(ctx, parsedAndValidated.errors);
         return;
     }
 
