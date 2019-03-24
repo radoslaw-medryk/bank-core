@@ -5,5 +5,5 @@ module.exports = {
     },
     // host: "", // Host (optional)
     // basePath: "/", // Base path (optional)
-    apis: ["src/api/routes/**/*", "src/api/models/**/*"], // Files with definitions
+    apis: ["src/api/routes/**/*.ts", "src/api/models/**/*.ts"], // Files with definitions
 };

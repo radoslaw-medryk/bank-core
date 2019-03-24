@@ -7,7 +7,7 @@
         "start": "node -r ts-node/register src/index.ts",
         "debug": "node --inspect-brk -r ts-node/register src/index.ts",
         "db": "sudo docker run --rm -i -t -e POSTGRES_DB=test -e POSTGRES_PASSWORD=alpine -p 127.0.0.1:5432:5432 postgres",
-        "build-swagger": "mkdir ./.swagger -p && swagger-jsdoc -d ./swagger.config.js -o ./.swagger/swagger.json",
+        "build-swagger": "mkdir ./.swagger -p && rm -r ./.swagger && mkdir ./.swagger -p && swagger-jsdoc -d ./swagger.config.js -o ./.swagger/swagger.json",
         "swagger": "npm run build-swagger && sudo docker run --rm -i -t -e SWAGGER_JSON=/swagger/swagger.json -p 127.0.0.1:8080:8080 -v \"$PWD/.swagger:/swagger\" swaggerapi/swagger-ui"
     },
     "dependencies": {
