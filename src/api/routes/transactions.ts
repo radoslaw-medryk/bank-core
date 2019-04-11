@@ -1,13 +1,14 @@
 import { router } from "@/api/server";
 import { check } from "../helpers/check";
-import { parseNumber, parseOptionalNumber } from "rusane/dist/parsing";
 import { validateNumberId } from "../validation/validation/validateNumberId";
 import { validatePageLimit } from "../validation/validation/validatePageLimit";
+import { transferDbService } from "@/db/services/transferDbService";
+import { defaultPageLimit } from "../helpers/defaultPageLimit";
+import { mapTransactionFromDb } from "../map/mapTransactionFromDb";
+import { responseSuccess } from "../helpers/responseSuccess";
+import { Parsing } from "rusane";
 
 const r = router.prefix("/api/v1/transactions");
-
-// TODO [RM]: validation / sanitization
-// TODO [RM]: Common response envelope, error codes, etc.
 
 /**
  * @swagger
@@ -29,13 +30,20 @@ const r = router.prefix("/api/v1/transactions");
  *                          items:
  *                              $ref: '#/definitions/ApiTransaction'
  *              400:
- *                  description: 'Error; // TODO [RM]: more details'
+ *                  $ref: '#/definitions/ApiError'
  */
 r.get("/", async ctx => {
-    const beforeId = check(ctx.query, "beforeId", parseOptionalNumber, validateNumberId);
-    const limit = check(ctx.query, "limit", parseOptionalNumber, validatePageLimit);
+    const beforeId = check(ctx.query, "beforeId", Parsing.parseOptionalNumber, validateNumberId);
+    let limit = check(ctx.query, "limit", Parsing.parseOptionalNumber, validatePageLimit);
 
-    throw new Error("Not implemented");
+    if (limit === undefined) {
+        limit = defaultPageLimit;
+    }
+
+    const dbTransfers = await transferDbService.getTransfers(beforeId, limit);
+    const transactions = dbTransfers.map(mapTransactionFromDb);
+
+    ctx.body = responseSuccess(transactions);
 });
 
 /**
@@ -58,34 +66,13 @@ r.get("/", async ctx => {
  *         schema:
  *             $ref: '#/definitions/ApiTransaction'
  *       400:
- *         description: 'Error; // TODO [RM]: more details'
+ *         $ref: '#/definitions/ApiError'
  */
 r.get("/:id", async ctx => {
-    const id = check(ctx.params, "id", parseNumber, validateNumberId);
+    const id = check(ctx.params, "id", Parsing.parseNumber, validateNumberId);
 
-    throw new Error("Not implemented");
+    const dbTransfer = await transferDbService.getTransfer(id);
+    const transaction = mapTransactionFromDb(dbTransfer);
+
+    ctx.body = responseSuccess(transaction);
 });
-
-// r.get("/:id", async ctx => {
-//     const transferId = Number(ctx.params.id); // TODO [RM]: validation/sanitization
-
-//     const transferDb = await transferDbService.getTransfer(transferId);
-
-//     ctx.body = mapTransactionFromDb(transferDb);
-// });
-
-// r.post("/", async ctx => {
-//     const parsedAndValidated = checkPerformTransferRequest(ctx.request.body);
-//     if (parsedAndValidated.errors) {
-//         responseApiErrors(ctx, parsedAndValidated.errors);
-//         return;
-//     }
-
-//     const request = parsedAndValidated.value;
-//     const { fromId, toId, amount } = request;
-
-//     const transferId = await transferDbService.transfer(fromId, toId, amount);
-//     // TODO [RM]: handle business logic errors - e.g. transfer failed as well
-
-//     ctx.body = transferId;
-// });

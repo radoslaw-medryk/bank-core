@@ -3,7 +3,7 @@ module.exports = {
         title: "bank-core", // Title (required)
         version: "1.0.0", // Version (required)
     },
-    // host: "", // Host (optional)
+    host: "localhost:5000", // Host (optional)
     // basePath: "/", // Base path (optional)
     // apis: ["src/api/routes/**/*.ts", "src/api/models/**/*.ts"], // Files with definitions
     apis: [

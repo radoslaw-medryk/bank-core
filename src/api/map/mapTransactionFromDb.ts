@@ -8,10 +8,10 @@ export const mapTransactionFromDb = (dbTransfer: TransferDb): ApiTransaction => 
         id: dbTransfer.id,
         category: "food",
         title: "test title",
-        date: dbTransfer.date,
+        date: dbTransfer.date.toString(),
         value: {
             currencyCode: "usd",
-            value: dbTransfer.amount,
+            value: dbTransfer.amount.toFixed(),
         },
     };
 };

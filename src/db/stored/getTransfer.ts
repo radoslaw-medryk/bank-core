@@ -14,7 +14,8 @@ export const createSql = storedFunction({
     params: ["transferId integer"],
     returns: sqlx`SETOF ${TransferT}`,
 })`
-    SELECT * FROM ${TransferT} WHERE ${TransferP.id} = transferId;
+    SELECT * FROM ${TransferT}
+    WHERE ${TransferP.id} = transferId;
 `;
 
 export const getTransfer = (transferId: TransferDbId) => {

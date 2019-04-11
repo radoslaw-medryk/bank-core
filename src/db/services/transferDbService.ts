@@ -6,8 +6,9 @@ import { TransferDbId, TransferDb, transferFromRow } from "@/db/models/TransferD
 import { toNumber } from "@/db/helpers/toNumber";
 import { getTransfer } from "@/db/stored/getTransfer";
 import Big from "big.js";
-import { ForeignKeyIntegrityConstraintViolationError } from "slonik";
-import { AccountDoesntExistsError } from "../exceptions/AccountDoesntExistError";
+import { ForeignKeyIntegrityConstraintViolationError, NotFoundError } from "slonik";
+import { getTransfers } from "../stored/getTransfers";
+import { ResourceDoesntExistsError } from "../exceptions/ResourceDoesntExistError";
 
 class TransferDbService {
     public transfer = async (fromId: AccountDbId, toId: AccountDbId, amount: Big): Promise<TransferDbId> => {
@@ -22,17 +23,30 @@ class TransferDbService {
             return toNumber(transferId);
         } catch (e) {
             if (e instanceof ForeignKeyIntegrityConstraintViolationError) {
-                throw new AccountDoesntExistsError(undefined, e);
+                throw new ResourceDoesntExistsError("account", undefined, undefined, e);
             }
 
             throw e;
         }
     };
 
+    public getTransfers = async (beforeId: TransferDbId | undefined, limit: number) => {
+        const sql = getTransfers(beforeId, limit);
+        const rows = await sqlx.any(pool, sql);
+        return rows.map(transferFromRow);
+    };
+
     public getTransfer = async (transferId: TransferDbId): Promise<TransferDb> => {
-        const sql = getTransfer(transferId);
-        const row = await sqlx.one(pool, sql);
-        return transferFromRow(row);
+        try {
+            const sql = getTransfer(transferId);
+            const row = await sqlx.one(pool, sql);
+            return transferFromRow(row);
+        } catch (e) {
+            if (e instanceof NotFoundError) {
+                throw new ResourceDoesntExistsError("transfer", transferId, undefined, e);
+            }
+            throw e;
+        }
     };
 }
 

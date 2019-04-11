@@ -2,11 +2,11 @@ import { Parsing, Validation } from "rusane";
 import { ParsingFailedError } from "../exceptions/ParsingFailedError";
 import { ValidationFailedError } from "../exceptions/ValidationFailedError";
 
-export const check = <TParsed>(
+export const check = <TParsed extends TValidated, TValidated>(
     object: any,
     propName: string,
     parseFunc: Parsing.ParseFunc<TParsed>,
-    ...validateFuncArray: Validation.ValidationFunc<TParsed>[]
+    ...validateFuncArray: Validation.ValidationFunc<TValidated>[]
 ): TParsed => {
     const value = object[propName];
 

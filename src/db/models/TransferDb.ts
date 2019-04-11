@@ -29,7 +29,7 @@ export const createSql = sqlx`
         ${p.fromId} integer REFERENCES ${AccountDb.table},
         ${p.toId} integer REFERENCES ${AccountDb.table},
         ${p.amount} numeric NOT NULL,
-        ${p.date} timestampz NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ${p.date} timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 `;
 

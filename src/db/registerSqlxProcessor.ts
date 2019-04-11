@@ -1,5 +1,6 @@
 import { sqlx } from "slonix";
 import { Big } from "big.js";
+import moment from "moment";
 
 sqlx.registerProcessor({
     predicate: value => value instanceof Big,
@@ -7,5 +8,14 @@ sqlx.registerProcessor({
         value: value.toString(),
         escapeString: false,
         wrapString: false,
+    }),
+});
+
+sqlx.registerProcessor({
+    predicate: value => value instanceof Date,
+    process: value => ({
+        value: moment(value).format(), // TODO [RM]: handle timezone, etc.
+        escapeString: false,
+        wrapString: true,
     }),
 });

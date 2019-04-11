@@ -103,6 +103,6 @@ export const validationToApiErrors = (error: Validation.ValidationError): ApiErr
         return apiErrors;
     }
 
-    const apiError = nestedValidationToApiErrors(error, true);
+    const apiError = nestedValidationToApiErrors(error, false);
     return apiError;
 };
