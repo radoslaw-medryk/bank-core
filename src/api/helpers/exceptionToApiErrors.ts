@@ -1,17 +1,15 @@
 import { AccountDoesntExistsError } from "@/db/exceptions/AccountDoesntExistError";
-import { AccountDoesntExistsApiError } from "../models/errors/AccountDoesntExistsApiError";
-import { ExceptionApiError } from "../models/errors/ExceptionApiError";
-import { ApiError } from "../models/errors/ApiError";
+import { ApiError, ApiAccountDoesntExistsError, ApiExceptionError } from "@radoslaw-medryk/bank-core-models";
 
 export const exceptionToApiErrors = (e: Error): ApiError[] => {
     if (e instanceof AccountDoesntExistsError) {
-        const apiError: AccountDoesntExistsApiError = {
+        const apiError: ApiAccountDoesntExistsError = {
             type: "account_doesnt_exists",
         };
         return [apiError];
     }
 
-    const apiError: ExceptionApiError = {
+    const apiError: ApiExceptionError = {
         type: "exception",
     };
     return [apiError];

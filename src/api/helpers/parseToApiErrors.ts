@@ -1,11 +1,9 @@
 import { Parsing } from "rusane";
-import { ApiError } from "../models/errors/ApiError";
-import { InvalidValueApiError } from "../models/errors/InvalidValueApiError";
-import { MissingValueApiError } from "../models/errors/MissingValueApiError";
+import { ApiError, ApiInvalidValueError, ApiMissingValueError } from "@radoslaw-medryk/bank-core-models";
 
 const nestedParseToApiError = (error: Parsing.ParseError): ApiError => {
     if (error.type === Parsing.ParseObjectErrorType || error.type === Parsing.ParsePropsErrorType) {
-        const apiError: InvalidValueApiError = {
+        const apiError: ApiInvalidValueError = {
             type: "invalid_value",
             key: error.key,
         };
@@ -13,7 +11,7 @@ const nestedParseToApiError = (error: Parsing.ParseError): ApiError => {
     }
 
     if (error.type === Parsing.MissingValueErrorType) {
-        const apiError: MissingValueApiError = {
+        const apiError: ApiMissingValueError = {
             type: "missing_value",
             key: error.key,
         };

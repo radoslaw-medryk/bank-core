@@ -5,5 +5,10 @@ module.exports = {
     },
     // host: "", // Host (optional)
     // basePath: "/", // Base path (optional)
-    apis: ["src/api/routes/**/*.ts", "src/api/models/**/*.ts"], // Files with definitions
+    // apis: ["src/api/routes/**/*.ts", "src/api/models/**/*.ts"], // Files with definitions
+    apis: [
+        "src/api/swagger.ts",
+        "src/api/routes/**/*.ts",
+        "node_modules/@radoslaw-medryk/bank-core-models/dist/**/*.d.ts",
+    ], // TODO [RM]: quite ugly hack, figure out good way
 };

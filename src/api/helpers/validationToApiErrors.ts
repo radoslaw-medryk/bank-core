@@ -1,11 +1,13 @@
 import { Validation } from "rusane";
-import { ApiError } from "../models/errors/ApiError";
-import { OtherApiError } from "../models/errors/OtherApiError";
-import { StringLengthApiError } from "../models/errors/StringLengthApiError";
-import { NumberRangeApiError } from "../models/errors/NumberRangeApiError";
-import { BigRangeApiError } from "../models/errors/BigRangeApiError";
-import { BigQuantApiError } from "../models/errors/BigQuantApiError";
-import { NumberIntegerApiError } from "../models/errors/NumberIntegerApiError";
+import {
+    ApiError,
+    ApiNumberIntegerError,
+    ApiBigQuantError,
+    ApiBigRangeError,
+    ApiNumberRangeError,
+    ApiStringLengthError,
+    ApiOtherError,
+} from "@radoslaw-medryk/bank-core-models";
 
 const nestedValidationToApiErrors = (error: Validation.ValidationError, ommitKey: boolean): ApiError[] => {
     const key = ommitKey ? undefined : error.key;
@@ -20,7 +22,7 @@ const nestedValidationToApiErrors = (error: Validation.ValidationError, ommitKey
     }
 
     if (error.type === Validation.ValidationPropsErrorType) {
-        const apiError: OtherApiError = {
+        const apiError: ApiOtherError = {
             type: "other",
             key: key,
         };
@@ -28,7 +30,7 @@ const nestedValidationToApiErrors = (error: Validation.ValidationError, ommitKey
     }
 
     if (error.type === Validation.StringLengthErrorType) {
-        const apiError: StringLengthApiError = {
+        const apiError: ApiStringLengthError = {
             type: "string_length",
             key: key,
             length: error.length,
@@ -39,7 +41,7 @@ const nestedValidationToApiErrors = (error: Validation.ValidationError, ommitKey
     }
 
     if (error.type === Validation.NumberRangeErrorType) {
-        const apiError: NumberRangeApiError = {
+        const apiError: ApiNumberRangeError = {
             type: "number_range",
             key: key,
             value: error.value,
@@ -50,7 +52,7 @@ const nestedValidationToApiErrors = (error: Validation.ValidationError, ommitKey
     }
 
     if (error.type === Validation.BigRangeErrorType) {
-        const apiError: BigRangeApiError = {
+        const apiError: ApiBigRangeError = {
             type: "big_range",
             key: key,
             value: error.value,
@@ -61,7 +63,7 @@ const nestedValidationToApiErrors = (error: Validation.ValidationError, ommitKey
     }
 
     if (error.type === Validation.BigQuantErrorType) {
-        const apiError: BigQuantApiError = {
+        const apiError: ApiBigQuantError = {
             type: "big_quant",
             key: key,
             value: error.value,
@@ -71,7 +73,7 @@ const nestedValidationToApiErrors = (error: Validation.ValidationError, ommitKey
     }
 
     if (error.type === Validation.NumberIntegerErrorType) {
-        const apiError: NumberIntegerApiError = {
+        const apiError: ApiNumberIntegerError = {
             type: "number_integer",
             key: key,
             value: error.value,

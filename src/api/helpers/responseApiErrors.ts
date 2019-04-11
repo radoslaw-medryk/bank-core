@@ -1,6 +1,5 @@
-import { ApiErrorResponse } from "../models/ApiResponse";
-import { ApiError } from "../models/errors/ApiError";
 import { ParameterizedContext } from "koa";
+import { ApiError, ApiErrorResponse } from "@radoslaw-medryk/bank-core-models";
 
 export const responseApiErrors = (ctx: ParameterizedContext, errors: ApiError[]) => {
     const response: ApiErrorResponse = {

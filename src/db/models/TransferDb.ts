@@ -4,6 +4,7 @@ import { QueryResultRowType } from "slonik";
 import { toNumber } from "@/db/helpers/toNumber";
 import { toBig } from "@/db/helpers/toBig";
 import Big from "big.js";
+import { toDate } from "../helpers/toDate";
 
 export type TransferDbId = number;
 
@@ -12,6 +13,7 @@ export class TransferDb {
     public fromId: AccountDbId = 0;
     public toId: AccountDbId = 0;
     public amount: Big = new Big(0);
+    public date: Date = new Date(0);
 
     public static table = tableDefinition("Transfers");
     public static props = propsDefinition(TransferDb);
@@ -26,7 +28,8 @@ export const createSql = sqlx`
         ${p.id} serial PRIMARY KEY,
         ${p.fromId} integer REFERENCES ${AccountDb.table},
         ${p.toId} integer REFERENCES ${AccountDb.table},
-        ${p.amount} numeric NOT NULL
+        ${p.amount} numeric NOT NULL,
+        ${p.date} timestampz NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 `;
 
@@ -36,5 +39,6 @@ export const transferFromRow = (row: QueryResultRowType<keyof TransferDb>): Tran
         fromId: toNumber(row.fromId),
         toId: toNumber(row.toId),
         amount: toBig(row.amount),
+        date: toDate(row.date),
     };
 };

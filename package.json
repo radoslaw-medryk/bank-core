@@ -11,6 +11,7 @@
         "swagger": "npm run build-swagger && sudo docker run --rm -i -t -e SWAGGER_JSON=/swagger/swagger.json -p 127.0.0.1:8080:8080 -v \"$PWD/.swagger:/swagger\" swaggerapi/swagger-ui"
     },
     "dependencies": {
+        "@radoslaw-medryk/bank-core-models": "file:../core-models",
         "@radoslaw-medryk/tslint": "^0.1.7",
         "@types/big.js": "^4.0.5",
         "@types/koa": "^2.0.48",
@@ -28,7 +29,7 @@
         "pg": "^7.8.1",
         "pg-promise": "^8.6.3",
         "require-dir": "^1.2.0",
-        "rusane": "^0.1.1",
+        "rusane": "^0.1.2",
         "slonik": "^16.10.0",
         "slonix": "^0.1.6",
         "tslint": "^5.13.0",
