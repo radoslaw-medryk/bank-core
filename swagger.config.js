@@ -9,6 +9,6 @@ module.exports = {
     apis: [
         "src/api/swagger.ts",
         "src/api/routes/**/*.ts",
-        "node_modules/@radoslaw-medryk/bank-core-models/dist/**/*.d.ts",
+        "node_modules/@radoslaw-medryk/bank-core-shared/dist/**/*.d.ts",
     ], // TODO [RM]: quite ugly hack, figure out good way
 };

@@ -7,7 +7,7 @@ import {
     ApiNumberRangeError,
     ApiStringLengthError,
     ApiOtherError,
-} from "@radoslaw-medryk/bank-core-models";
+} from "@radoslaw-medryk/bank-core-shared";
 
 const nestedValidationToApiErrors = (error: Validation.ValidationError, ommitKey: boolean): ApiError[] => {
     const key = ommitKey ? undefined : error.key;

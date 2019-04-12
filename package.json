@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@koa/cors": "^3.0.0",
-        "@radoslaw-medryk/bank-core-models": "file:../core-models",
+        "@radoslaw-medryk/bank-core-shared": "^0.1.0",
         "@radoslaw-medryk/tslint": "^0.1.7",
         "@types/big.js": "^4.0.5",
         "@types/koa": "^2.0.48",

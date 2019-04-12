@@ -1,5 +1,5 @@
 import { Parsing } from "rusane";
-import { ApiError, ApiInvalidValueError, ApiMissingValueError } from "@radoslaw-medryk/bank-core-models";
+import { ApiError, ApiInvalidValueError, ApiMissingValueError } from "@radoslaw-medryk/bank-core-shared";
 
 const nestedParseToApiError = (error: Parsing.ParseError): ApiError => {
     if (error.type === Parsing.ParseObjectErrorType || error.type === Parsing.ParsePropsErrorType) {

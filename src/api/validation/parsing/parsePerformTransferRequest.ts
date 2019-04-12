@@ -1,6 +1,6 @@
 // import { Parsing } from "rusane";
 // import { AnyProps } from "../helpers/AnyProps";
-// import { ApiPerformTransferRequest } from "@radoslaw-medryk/bank-core-models";
+// import { ApiPerformTransferRequest } from "@radoslaw-medryk/bank-core-shared";
 
 // export const parsePerformTransferRequest = (
 //     value: AnyProps<ApiPerformTransferRequest>,

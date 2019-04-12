@@ -1,4 +1,4 @@
-import { ApiError, ApiExceptionError, ApiResourceDoesntExistsError } from "@radoslaw-medryk/bank-core-models";
+import { ApiError, ApiExceptionError, ApiResourceDoesntExistsError } from "@radoslaw-medryk/bank-core-shared";
 import { ParsingFailedError } from "../exceptions/ParsingFailedError";
 import { parseToApiErrors } from "./parseToApiErrors";
 import { ValidationFailedError } from "../exceptions/ValidationFailedError";

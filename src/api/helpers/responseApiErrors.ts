@@ -1,5 +1,5 @@
 import { ParameterizedContext } from "koa";
-import { ApiError, ApiErrorResponse } from "@radoslaw-medryk/bank-core-models";
+import { ApiError, ApiErrorResponse } from "@radoslaw-medryk/bank-core-shared";
 
 export const responseApiErrors = (ctx: ParameterizedContext, errors: ApiError[]) => {
     const response: ApiErrorResponse = {

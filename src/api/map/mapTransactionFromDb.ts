@@ -1,5 +1,5 @@
 import { TransferDb } from "@/db/models/TransferDb";
-import { ApiTransaction } from "@radoslaw-medryk/bank-core-models";
+import { ApiTransaction } from "@radoslaw-medryk/bank-core-shared";
 
 // TODO [RM]: contains dummy/test data partially for now
 
