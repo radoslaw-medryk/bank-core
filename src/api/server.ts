@@ -3,8 +3,9 @@ import Router from "koa-router";
 import koaBody from "koa-body";
 import koaCors from "@koa/cors";
 import { errorHandler } from "./errorHandler";
+import { appconfig } from "@/configs/appconfig";
 
-const port = 5000;
+const { port } = appconfig;
 
 export const koa = new Koa();
 export const router = new Router();
