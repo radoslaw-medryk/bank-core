@@ -3,7 +3,7 @@ import { responseSuccess } from "../helpers/responseSuccess";
 import { Parsing } from "rusane";
 import { validateStringLength } from "rusane/dist/validation";
 import jwt from "jsonwebtoken";
-import { jwtconfig } from "@/configs/jwtconfig";
+import { jwtserverconfig } from "@/configs/jwtserverconfig";
 import Router from "koa-router";
 import { userDbService } from "@/db/services/userDbService";
 
@@ -32,9 +32,9 @@ r.post("/token", async ctx => {
 
     // TODO [RM]: audit logs
 
-    const token = jwt.sign({}, jwtconfig.privateKey, {
+    const token = jwt.sign({}, jwtserverconfig.privateKey, {
         algorithm: "RS256",
-        expiresIn: jwtconfig.expiresIn,
+        expiresIn: jwtserverconfig.expiresIn,
         subject: userDb.id.toString(),
     });
 

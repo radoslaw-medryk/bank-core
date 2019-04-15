@@ -7,6 +7,7 @@ import { mapTransactionFromDb } from "../map/mapTransactionFromDb";
 import { responseSuccess } from "../helpers/responseSuccess";
 import { Parsing } from "rusane";
 import Router from "koa-router";
+import { requireJwt } from "../requireJwt";
 
 const r = new Router({
     prefix: "/api/v1/transactions",
@@ -34,7 +35,7 @@ const r = new Router({
  *              400:
  *                  $ref: '#/definitions/ApiError'
  */
-r.get("/", async ctx => {
+r.get("/", requireJwt, async ctx => {
     const beforeId = check(ctx.query, "beforeId", Parsing.parseOptionalNumber, validateNumberId);
     let limit = check(ctx.query, "limit", Parsing.parseOptionalNumber, validatePageLimit);
 
@@ -70,7 +71,7 @@ r.get("/", async ctx => {
  *       400:
  *         $ref: '#/definitions/ApiError'
  */
-r.get("/:id", async ctx => {
+r.get("/:id", requireJwt, async ctx => {
     const id = check(ctx.params, "id", Parsing.parseNumber, validateNumberId);
 
     const dbTransfer = await transferDbService.getTransfer(id);
