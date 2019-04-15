@@ -8,7 +8,12 @@ export const check = <TParsed extends TValidated, TValidated>(
     parseFunc: Parsing.ParseFunc<TParsed>,
     ...validateFuncArray: Validation.ValidationFunc<TValidated>[]
 ): TParsed => {
-    const value = object[propName];
+    const parsedObject = Parsing.parseObject(object);
+    if (Parsing.isFailedParseResult(parsedObject)) {
+        throw new ParsingFailedError(parsedObject.error);
+    }
+
+    const value = parsedObject.value[propName];
 
     const parsed = parseFunc(value, propName);
     if (Parsing.isFailedParseResult(parsed)) {

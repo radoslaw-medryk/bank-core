@@ -1,4 +1,3 @@
-import { router } from "@/api/server";
 import { check } from "../helpers/check";
 import { validateNumberId } from "../validation/validation/validateNumberId";
 import { validatePageLimit } from "../validation/validation/validatePageLimit";
@@ -7,8 +6,11 @@ import { defaultPageLimit } from "../helpers/defaultPageLimit";
 import { mapTransactionFromDb } from "../map/mapTransactionFromDb";
 import { responseSuccess } from "../helpers/responseSuccess";
 import { Parsing } from "rusane";
+import Router from "koa-router";
 
-const r = router.prefix("/api/v1/transactions");
+const r = new Router({
+    prefix: "/api/v1/transactions",
+});
 
 /**
  * @swagger
@@ -76,3 +78,9 @@ r.get("/:id", async ctx => {
 
     ctx.body = responseSuccess(transaction);
 });
+
+r.post("/", async ctx => {
+    console.log("POST to /api/v1/transactions");
+});
+
+export default r;
