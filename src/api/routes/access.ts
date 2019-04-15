@@ -5,6 +5,7 @@ import { validateStringLength } from "rusane/dist/validation";
 import jwt from "jsonwebtoken";
 import { jwtconfig } from "@/configs/jwtconfig";
 import Router from "koa-router";
+import { userDbService } from "@/db/services/userDbService";
 
 const r = new Router({
     prefix: "/api/v1/access",
@@ -27,17 +28,41 @@ r.post("/token", async ctx => {
         validateStringLength({ minLength: 1, maxLength: 256 })
     );
 
-    // TODO [RM]: TEST, TEMP only - add real user/account check later
+    const userDb = await userDbService.getUserByEmailAndPassword(email, password);
+
     // TODO [RM]: audit logs
 
     const token = jwt.sign({}, jwtconfig.privateKey, {
         algorithm: "RS256",
         expiresIn: jwtconfig.expiresIn,
-        subject: email, // TODO [RM]: naive for now, TEST only
+        subject: userDb.id.toString(),
     });
 
     ctx.body = responseSuccess({
         token: token,
+    });
+});
+
+// TODO [RM]: swagger
+r.post("/users", async ctx => {
+    const email = check(
+        ctx.request.body,
+        "email",
+        Parsing.parseString,
+        validateStringLength({ minLength: 1, maxLength: 256 })
+    );
+    const password = check(
+        ctx.request.body,
+        "password",
+        Parsing.parseString,
+        validateStringLength({ minLength: 8, maxLength: 256 })
+        // TODO [RM]: validate password strength, etc.
+    );
+
+    const userId = await userDbService.createUser(email, password);
+
+    ctx.body = responseSuccess({
+        userId: userId,
     });
 });
 

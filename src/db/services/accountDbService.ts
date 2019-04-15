@@ -5,6 +5,8 @@ import { createAccount } from "@/db/stored/createAccount";
 import { toNumber } from "@/db/helpers/toNumber";
 import { getAccount } from "@/db/stored/getAccount";
 
+// TODO [RM]: wrap db exceptions into meaningful exceptions
+
 class AccountDbService {
     public createAccount = async (): Promise<AccountDbId> => {
         const sql = createAccount();

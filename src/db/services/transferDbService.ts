@@ -10,6 +10,8 @@ import { ForeignKeyIntegrityConstraintViolationError, NotFoundError } from "slon
 import { getTransfers } from "../stored/getTransfers";
 import { ResourceDoesntExistsError } from "../exceptions/ResourceDoesntExistError";
 
+// TODO [RM]: wrap db exceptions into meaningful exceptions
+
 class TransferDbService {
     public transfer = async (fromId: AccountDbId, toId: AccountDbId, amount: Big): Promise<TransferDbId> => {
         if (fromId === toId) {

@@ -12,8 +12,9 @@
     },
     "dependencies": {
         "@koa/cors": "^3.0.0",
-        "@radoslaw-medryk/bank-core-shared": "^0.1.0",
+        "@radoslaw-medryk/bank-core-shared": "^0.1.2",
         "@radoslaw-medryk/tslint": "^0.1.7",
+        "@types/bcrypt": "^3.0.0",
         "@types/big.js": "^4.0.5",
         "@types/jsonwebtoken": "^8.3.2",
         "@types/koa": "^2.0.48",
@@ -23,6 +24,8 @@
         "@types/node": "^11.9.5",
         "@types/require-dir": "^1.0.0",
         "@types/slonik": "^15.4.0",
+        "@types/uuid": "^3.4.4",
+        "bcrypt": "^3.0.6",
         "big.js": "^5.2.2",
         "jsonwebtoken": "^8.5.1",
         "koa": "^2.7.0",
@@ -39,7 +42,8 @@
         "slonik": "^16.10.0",
         "slonix": "^0.1.6",
         "tslint": "^5.13.0",
-        "typescript": "^3.3.3333"
+        "typescript": "^3.3.3333",
+        "uuid": "^3.3.2"
     },
     "devDependencies": {
         "prettier": "^1.16.4",
