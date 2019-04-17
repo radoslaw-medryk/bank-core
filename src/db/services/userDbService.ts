@@ -40,22 +40,19 @@ class UserDbService {
     };
 
     public getUserByEmailAndPassword = async (email: string, password: string): Promise<UserDb> => {
-        try {
-            const sql = getUserByEmail(email);
-            const row = await sqlx.one(pool, sql);
-            const userDb = userFromRow(row);
-
-            if (!(await this.verifyPassword(userDb.passwordHash, password))) {
-                throw new ResourceDoesntExistsError("user");
-            }
-
-            return userDb;
-        } catch (e) {
-            if (e instanceof NotFoundError) {
-                throw new ResourceDoesntExistsError("user", undefined, undefined, e);
-            }
-            throw e;
+        const sql = getUserByEmail(email);
+        const row = await sqlx.maybeOne(pool, sql);
+        if (row === null) {
+            throw new ResourceDoesntExistsError("user");
         }
+
+        const userDb = userFromRow(row);
+
+        if (!(await this.verifyPassword(userDb.passwordHash, password))) {
+            throw new ResourceDoesntExistsError("user");
+        }
+
+        return userDb;
     };
 
     private hashPassword = async (password: string): Promise<string> => {

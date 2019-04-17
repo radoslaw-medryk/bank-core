@@ -11,13 +11,13 @@ const name = sql.identifier(["getTransfer"]);
 export const createSql = storedFunction({
     name: name,
     language: "sql",
-    params: ["transferId integer"],
+    params: ["_transferId integer"],
     returns: sqlx`SETOF ${TransferT}`,
 })`
     SELECT * FROM ${TransferT}
-    WHERE ${TransferP.id} = transferId;
+    WHERE ${TransferP.id} = _transferId;
 `;
 
 export const getTransfer = (transferId: TransferDbId) => {
-    return sqlx`SELECT * FROM ${name}(transferId => ${transferId})`;
+    return sqlx`SELECT * FROM ${name}(_transferId => ${transferId})`;
 };
