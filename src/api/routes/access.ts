@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import { jwtserverconfig } from "@/configs/jwtserverconfig";
 import Router from "koa-router";
 import { userDbService } from "@/db/services/userDbService";
+import { ApiAccessTokenResponse } from "@radoslaw-medryk/bank-core-shared";
 
 const r = new Router({
     prefix: "/api/v1/access",
@@ -38,9 +39,11 @@ r.post("/token", async ctx => {
         subject: userDb.id.toString(),
     });
 
-    ctx.body = responseSuccess({
+    const response: ApiAccessTokenResponse = {
         token: token,
-    });
+    };
+
+    ctx.body = responseSuccess(response);
 });
 
 // TODO [RM]: swagger

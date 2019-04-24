@@ -8,12 +8,13 @@ import { UserDbId } from "../models/UserDb";
 import { getUserAccounts } from "../stored/getUserAccounts";
 import { isUserAccount } from "../stored/isUserAccount";
 import { toBoolean } from "../helpers/toBoolean";
+import { CurrencyCodeDb } from "../models/types/CurrencyCodeDb";
 
 // TODO [RM]: wrap db exceptions into meaningful exceptions
 
 class AccountDbService {
-    public createAccount = async (userId: UserDbId): Promise<AccountDbId> => {
-        const sql = createAccount(userId);
+    public createAccount = async (userId: UserDbId, currency: CurrencyCodeDb): Promise<AccountDbId> => {
+        const sql = createAccount(userId, currency);
         const accountId = await sqlx.oneFirst(pool, sql);
         return toNumber(accountId);
     };

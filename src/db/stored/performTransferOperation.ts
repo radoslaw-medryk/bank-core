@@ -22,6 +22,7 @@ const OperationTransferP = OperationTransferDb.props;
 const name = sql.identifier(["performTransferOperation"]);
 
 // TODO [RM]: split into smaller stored functions
+// TODO [RM]: allow transfer only between accounts with the same currency
 
 export const createSql = storedFunction({
     name: name,

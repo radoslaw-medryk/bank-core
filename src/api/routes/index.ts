@@ -2,8 +2,9 @@ import requireDir = require("require-dir");
 import combineRouters from "koa-combine-routers";
 import Router from "koa-router";
 import { InternalError } from "@/InternalError";
+import { flattenRequireDir } from "../helpers/flattenRequireDir";
 
-const routers = Object.values(requireDir(".")).map(q => q.default);
+const routers = flattenRequireDir(requireDir(".", { recurse: true }));
 
 if (routers.some(q => !(q instanceof Router))) {
     throw new InternalError("Some of imported routers are not instance of koa's Router.");

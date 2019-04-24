@@ -7,8 +7,8 @@ export const seedTestData = async () => {
     const userId1 = await userDbService.createUser("test@gmail.com", "qwertyuiop1");
     const userId2 = await userDbService.createUser("another@gmail.com", "qwertyuiop1");
 
-    const accountId1 = await accountDbService.createAccount(userId1);
-    const accountId2 = await accountDbService.createAccount(userId2);
+    const accountId1 = await accountDbService.createAccount(userId1, "usd");
+    const accountId2 = await accountDbService.createAccount(userId2, "usd");
 
     for (let i = 0; i < 100; i++) {
         const amount = Math.floor(Math.random() * 20000 * 100) / 100;
