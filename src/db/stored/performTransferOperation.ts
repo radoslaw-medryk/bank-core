@@ -48,7 +48,7 @@ export const createSql = storedFunction({
 
         INSERT INTO ${OperationT}
         (${OperationP.accountId}, ${OperationP.amount}, ${OperationP.title}, ${OperationP.category})
-        VALUES (_fromId, _amount, _title, _category)
+        VALUES (_fromId, -_amount, _title, _category)
         RETURNING ${OperationP.id} INTO "_fromOperationId";
 
         INSERT INTO ${OperationTransferT}
@@ -57,7 +57,7 @@ export const createSql = storedFunction({
 
         INSERT INTO ${OperationT}
         (${OperationP.accountId}, ${OperationP.amount}, ${OperationP.title}, ${OperationP.category})
-        VALUES (_toId, -_amount, _title, _category)
+        VALUES (_toId, _amount, _title, _category)
         RETURNING ${OperationP.id} INTO "_toOperationId";
 
         INSERT INTO ${OperationTransferT}
