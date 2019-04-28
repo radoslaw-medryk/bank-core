@@ -1,6 +1,9 @@
 {
     "name": "@radoslaw-medryk/bank-core",
     "private": true,
+    "engines": {
+        "node": "10.X"
+    },
     "scripts": {
         "prettier": "prettier ./src/**/*.{js,ts,tsx,json} --write",
         "build": "mkdir dist -p && rm -r dist && tsc",
