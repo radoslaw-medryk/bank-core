@@ -5,7 +5,7 @@ import { UserDbId, UserDb, userFromRow } from "../models/UserDb";
 import { createUser } from "../stored/createUser";
 import { getUser } from "../stored/getUser";
 import { getUserByEmail } from "../stored/getUserByEmail";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { ResourceDoesntExistsError } from "../exceptions/ResourceDoesntExistError";
 import { NotFoundError, UniqueIntegrityConstraintViolationError } from "slonik";
 import { ResourceAlreadyExistsError } from "../exceptions/ResourceAlreadyExistsError";
