@@ -11,12 +11,12 @@ const name = sql.identifier(["getUserByEmail"]);
 export const createSql = storedFunction({
     name: name,
     language: "sql",
-    params: ["email varchar"],
+    params: ["_email varchar"],
     returns: sqlx`SETOF ${UserT}`,
 })`
-    SELECT * FROM ${UserT} WHERE ${UserP.email} = email;
+    SELECT * FROM ${UserT} WHERE ${UserP.email} = _email;
 `;
 
 export const getUserByEmail = (email: string) => {
-    return sqlx`SELECT * FROM ${name}(email => ${email})`;
+    return sqlx`SELECT * FROM ${name}(_email => ${email})`;
 };

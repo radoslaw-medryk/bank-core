@@ -11,16 +11,16 @@ const name = sql.identifier(["getTransfers"]);
 export const createSql = storedFunction({
     name: name,
     language: "sql",
-    params: ["beforeId integer", "limitCount integer"],
+    params: ["_beforeId integer", "_limitCount integer"],
     returns: sqlx`SETOF ${TransferT}`,
 })`
     SELECT * FROM ${TransferT}
-    WHERE ${TransferP.id} < beforeId
+    WHERE ${TransferP.id} < _beforeId
     ORDER BY ${TransferP.id} DESC
-    LIMIT limitCount;
+    LIMIT _limitCount;
 `;
 
 export const getTransfers = (beforeId: TransferDbId | undefined, limit: number) => {
-    beforeId = beforeId || 999999; // TODO [RM]: quick hack for TEST PURPOSES ONLY.
-    return sqlx`SELECT * FROM ${name}(beforeId => ${beforeId}, limitCount => ${limit})`;
+    beforeId = beforeId || 9999999; // TODO [RM]: quick hack for TEST PURPOSES ONLY.
+    return sqlx`SELECT * FROM ${name}(_beforeId => ${beforeId}, _limitCount => ${limit})`;
 };

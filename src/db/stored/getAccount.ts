@@ -11,12 +11,12 @@ const name = sql.identifier(["getAccount"]);
 export const createSql = storedFunction({
     name: name,
     language: "sql",
-    params: ["accountId integer"],
+    params: ["_accountId integer"],
     returns: sqlx`SETOF ${AccountT}`,
 })`
-    SELECT * FROM ${AccountT} WHERE ${AccountP.id} = accountId;
+    SELECT * FROM ${AccountT} WHERE ${AccountP.id} = _accountId;
 `;
 
 export const getAccount = (accountId: AccountDbId) => {
-    return sqlx`SELECT * FROM ${name}(accountId => ${accountId})`;
+    return sqlx`SELECT * FROM ${name}(_accountId => ${accountId})`;
 };

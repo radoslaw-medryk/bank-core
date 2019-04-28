@@ -35,7 +35,8 @@ export const storedFunction = (config: StoredFunctionConfig) => (
     const _language = sql.raw(config.language);
 
     return sqlx`
-        CREATE OR REPLACE FUNCTION
+        DROP FUNCTION IF EXISTS ${_name};
+        CREATE FUNCTION
         ${_name} (${_params})
         ${sql.raw(_returns ? "RETURNS " : "")}${_returns || sql.raw("")}
         AS $function_body$

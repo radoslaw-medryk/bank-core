@@ -11,12 +11,12 @@ const name = sql.identifier(["getUser"]);
 export const createSql = storedFunction({
     name: name,
     language: "sql",
-    params: ["userId integer"],
+    params: ["_userId integer"],
     returns: sqlx`SETOF ${UserT}`,
 })`
-    SELECT * FROM ${UserT} WHERE ${UserP.id} = userId;
+    SELECT * FROM ${UserT} WHERE ${UserP.id} = _userId;
 `;
 
 export const getUser = (userId: UserDbId) => {
-    return sqlx`SELECT * FROM ${name}(userId => ${userId})`;
+    return sqlx`SELECT * FROM ${name}(_userId => ${userId})`;
 };

@@ -11,15 +11,15 @@ const name = sql.identifier(["createUser"]);
 export const createSql = storedFunction({
     name: name,
     language: "plpgsql",
-    params: ["email varchar", "passwordHash varchar", "OUT userId integer"],
+    params: ["_email varchar", "_passwordHash varchar", "OUT _userId integer"],
 })`
     BEGIN
         INSERT INTO ${UserT} (${UserP.email}, ${UserP.passwordHash})
-        VALUES (email, passwordHash)
-        RETURNING ${UserP.id} INTO userId;
+        VALUES (_email, _passwordHash)
+        RETURNING ${UserP.id} INTO _userId;
     END;
 `;
 
 export const createUser = (email: string, passwordHash: string): SqlxQuery => {
-    return sqlx`SELECT * FROM ${name}(email => ${email}, passwordHash => ${passwordHash});`;
+    return sqlx`SELECT * FROM ${name}(_email => ${email}, _passwordHash => ${passwordHash});`;
 };
