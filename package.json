@@ -15,7 +15,7 @@
     },
     "dependencies": {
         "@koa/cors": "^3.0.0",
-        "@radoslaw-medryk/bank-core-shared": "^0.1.9",
+        "@radoslaw-medryk/bank-core-shared": "^0.1.10",
         "@radoslaw-medryk/tslint": "^0.1.7",
         "@types/bcryptjs": "^2.4.2",
         "@types/big.js": "^4.0.5",
@@ -44,7 +44,7 @@
         "pg": "^7.8.1",
         "pg-promise": "^8.6.3",
         "require-dir": "^1.2.0",
-        "rusane": "^0.1.5",
+        "rusane": "^0.1.6",
         "slonik": "^16.10.0",
         "slonix": "^0.1.6",
         "tslint": "^5.13.0",

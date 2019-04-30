@@ -1,10 +1,11 @@
 import { check } from "../../helpers/check";
 import { responseSuccess } from "../../helpers/responseSuccess";
 import { Parsing } from "rusane";
-import { validateStringLength } from "rusane/dist/validation";
+import { validateStringLength, validateEmail } from "rusane/dist/validation";
 import Router from "koa-router";
 import { userDbService } from "@/db/services/userDbService";
 import { ApiRegisterUserResponse } from "@radoslaw-medryk/bank-core-shared";
+import { accountDbService } from "@/db/services/accountDbService";
 
 const r = new Router({
     prefix: "/api/v1/access/users",
@@ -16,7 +17,8 @@ r.post("/", async ctx => {
         ctx.request.body,
         "email",
         Parsing.parseString,
-        validateStringLength({ minLength: 1, maxLength: 256 })
+        validateStringLength({ minLength: 1, maxLength: 256 }),
+        validateEmail
     );
     const password = check(
         ctx.request.body,
@@ -27,6 +29,7 @@ r.post("/", async ctx => {
     );
 
     const userId = await userDbService.createUser(email, password);
+    const accountId = await accountDbService.createAccount(userId, "usd");
 
     const response: ApiRegisterUserResponse = {
         userId: userId,

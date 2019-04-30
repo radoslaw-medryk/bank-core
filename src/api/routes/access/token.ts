@@ -42,9 +42,14 @@ r.post("/", async ctx => {
 
     const expiresInSec = Math.floor(ms(jwtserverconfig.expiresIn) / 1000);
 
+    const profile = {
+        email: email,
+    };
+
     const response: ApiAccessTokenResponse = {
         token: token,
         expiresInSec: expiresInSec,
+        profile: profile,
     };
 
     ctx.body = responseSuccess(response);
