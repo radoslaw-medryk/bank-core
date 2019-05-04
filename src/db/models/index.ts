@@ -4,6 +4,7 @@ import * as OperationTransfer from "./OperationTransferDb";
 import * as Transfer from "./TransferDb";
 import * as UserAccount from "./UserAccountDb";
 import * as User from "./UserDb";
+import * as Friend from "./FriendDb";
 
 export const modelCreateSqls = [
     Account.createSql,
@@ -12,4 +13,5 @@ export const modelCreateSqls = [
     Transfer.createSql,
     Operation.createSql,
     OperationTransfer.createSql,
+    Friend.createSql,
 ];

@@ -2,10 +2,14 @@ import { accountDbService } from "./services/accountDbService";
 import { Big } from "big.js";
 import { operationDbService } from "./services/operationDbService";
 import { userDbService } from "./services/userDbService";
+import { friendDbService } from "./services/friendDbService";
 
 export const seedTestData = async () => {
     const userId1 = await userDbService.createUser("test@gmail.com", "qwertyuiop1");
     const userId2 = await userDbService.createUser("another@gmail.com", "qwertyuiop1");
+
+    const friendId1 = await friendDbService.makeFriend(userId1, userId2);
+    const friendId2 = await friendDbService.makeFriend(userId2, userId1);
 
     const accountUser1Usd = await accountDbService.createAccount(userId1, "usd");
     const accountUser1Cny = await accountDbService.createAccount(userId1, "cny");
