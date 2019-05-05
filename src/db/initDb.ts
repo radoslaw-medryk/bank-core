@@ -21,6 +21,6 @@ export const initDb = async () => {
         }
     });
 
-    await seedInitData();
-    await seedTestData();
+    const initData = await seedInitData();
+    await seedTestData(initData);
 };

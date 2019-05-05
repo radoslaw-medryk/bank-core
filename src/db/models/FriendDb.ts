@@ -8,8 +8,8 @@ export type FriendDbId = number;
 
 export class FriendDb {
     public id: FriendDbId = 0;
-    public ownerId: UserDbId = 0;
-    public friendId: UserDbId = 0;
+    public ownerUserId: UserDbId = 0;
+    public friendUserId: UserDbId = 0;
     public date: Date = new Date(0);
 
     public static table = tableDefinition("Friends");
@@ -23,20 +23,20 @@ export const createSql = sqlx`
     DROP TABLE IF EXISTS ${t} CASCADE;
     CREATE TABLE ${t} (
         ${p.id} serial PRIMARY KEY,
-        ${p.ownerId} integer REFERENCES ${UserDb.table} NOT NULL,
-        ${p.friendId} integer REFERENCES ${UserDb.table} NOT NULL,
+        ${p.ownerUserId} integer REFERENCES ${UserDb.table} NOT NULL,
+        ${p.friendUserId} integer REFERENCES ${UserDb.table} NOT NULL,
         ${p.date} timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-        CHECK(${p.ownerId} != ${p.friendId}),
-        UNIQUE(${p.ownerId}, ${p.friendId})
+        CHECK(${p.ownerUserId} != ${p.friendUserId}),
+        UNIQUE(${p.ownerUserId}, ${p.friendUserId})
     );
 `;
 
 export const friendFromRow = (row: QueryResultRowType<keyof FriendDb>): FriendDb => {
     return {
         id: toNumber(row.id),
-        ownerId: toNumber(row.ownerId),
-        friendId: toNumber(row.friendId),
+        ownerUserId: toNumber(row.ownerUserId),
+        friendUserId: toNumber(row.friendUserId),
         date: toDate(row.date),
     };
 };

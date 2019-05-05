@@ -29,7 +29,7 @@ r.post("/", async ctx => {
     );
 
     const userId = await userDbService.createUser(email, password);
-    const accountId = await accountDbService.createAccount(userId, "usd");
+    const accountId = await accountDbService.createUserAccount(userId, "usd");
 
     const response: ApiRegisterUserResponse = {
         userId: userId,

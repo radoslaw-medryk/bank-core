@@ -12,7 +12,7 @@ const AccountP = AccountDb.props;
 const UserAccountT = UserAccountDb.table;
 const UserAccountP = UserAccountDb.props;
 
-const name = sql.identifier(["createAccount"]);
+const name = sql.identifier(["createUserAccount"]);
 
 export const createSql = storedFunction({
     name: name,
@@ -20,8 +20,8 @@ export const createSql = storedFunction({
     params: ["_userId integer", "_currency varchar", "OUT _accountId integer"],
 })`
     BEGIN
-        INSERT INTO ${AccountT} (${AccountP.balance}, ${AccountP.currency})
-        VALUES (0, _currency)
+        INSERT INTO ${AccountT} (${AccountP.balance}, ${AccountP.currency}, ${AccountP.negativeAllowed})
+        VALUES (0, _currency, FALSE)
         RETURNING ${AccountP.id} INTO _accountId;
 
         INSERT INTO ${UserAccountT} (${UserAccountP.userId}, ${UserAccountP.accountId})
@@ -29,6 +29,6 @@ export const createSql = storedFunction({
     END;
 `;
 
-export const createAccount = (userId: UserDbId, currency: CurrencyCodeDb): SqlxQuery => {
+export const createUserAccount = (userId: UserDbId, currency: CurrencyCodeDb): SqlxQuery => {
     return sqlx`SELECT * FROM ${name}(_userId => ${userId}, _currency => ${currency});`;
 };

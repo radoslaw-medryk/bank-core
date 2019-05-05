@@ -15,15 +15,15 @@ const name = sql.identifier(["makeFriend"]);
 export const createSql = storedFunction({
     name: name,
     language: "plpgsql",
-    params: ["_ownerId integer", "_targetId integer", "OUT _friendId integer"],
+    params: ["_ownerUserId integer", "_targetUserId integer", "OUT _friendId integer"],
 })`
     BEGIN
-        INSERT INTO ${FriendT} (${FriendP.ownerId}, ${FriendP.friendId})
-        VALUES (_ownerId, _targetId)
+        INSERT INTO ${FriendT} (${FriendP.ownerUserId}, ${FriendP.friendUserId})
+        VALUES (_ownerUserId, _targetUserId)
         RETURNING ${FriendP.id} INTO _friendId;
     END;
 `;
 
-export const makeFriend = (ownerId: UserDbId, targetId: UserDbId): SqlxQuery => {
-    return sqlx`SELECT * FROM ${name}(_ownerId => ${ownerId}, _targetId => ${targetId});`;
+export const makeFriend = (ownerUserId: UserDbId, targetUserId: UserDbId): SqlxQuery => {
+    return sqlx`SELECT * FROM ${name}(_ownerUserId => ${ownerUserId}, _targetUserId => ${targetUserId});`;
 };
