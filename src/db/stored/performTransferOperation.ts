@@ -22,7 +22,6 @@ const OperationTransferP = OperationTransferDb.props;
 const name = sql.identifier(["performTransferOperation"]);
 
 // TODO [RM]: split into smaller stored functions
-// TODO [RM]: allow transfer only between accounts with the same currency
 
 export const createSql = storedFunction({
     name: name,
@@ -39,8 +38,24 @@ export const createSql = storedFunction({
 })`
     DECLARE _transactionId integer;
     BEGIN
-        UPDATE ${AccountT} SET ${AccountP.balance} = ${AccountP.balance} - _amount WHERE ${AccountP.id} = _fromId;
-        UPDATE ${AccountT} SET ${AccountP.balance} = ${AccountP.balance} + _amount WHERE ${AccountP.id} = _toId;
+        IF NOT EXISTS (
+            SELECT 1 FROM ${AccountT}
+            WHERE ${AccountP.id} = _fromId
+            AND ${AccountP.currency} = (SELECT ${AccountP.currency} FROM ${AccountT} WHERE ${AccountP.id} = _toId)
+        ) THEN RAISE EXCEPTION 'One of accounts doesnt exist or currency mismatch.';
+        END IF;
+
+        UPDATE ${AccountT}
+        SET ${AccountP.balance} = ${AccountP.balance} - _amount
+        WHERE ${AccountP.id} = _fromId
+        AND (${AccountP.negativeAllowed} = TRUE OR ${AccountP.balance} >= _amount);
+
+        IF NOT FOUND THEN RAISE EXCEPTION 'From account not found or insufficient funds.';
+        END IF;
+
+        UPDATE ${AccountT}
+        SET ${AccountP.balance} = ${AccountP.balance} + _amount
+        WHERE ${AccountP.id} = _toId;
 
         INSERT INTO ${TransferT} (${TransferP.fromId}, ${TransferP.toId}, ${TransferP.amount})
         VALUES (_fromId, _toId, _amount)

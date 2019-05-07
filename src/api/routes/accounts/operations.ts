@@ -27,14 +27,10 @@ r.get("/", requireJwt, async ctx => {
         limit = defaultPageLimit;
     }
 
-    const isUserAccount = await accountDbService.isUserAccount(userId, accountId);
-    if (!isUserAccount) {
-        // TODO [RM]: throw nice error
-        throw new InternalError("Account is not user's account.");
-    }
+    const account = await accountDbService.getUserAccount(userId, accountId);
 
     const dbOperations = await operationDbService.getOperations(accountId, beforeId, limit);
-    const transactions = dbOperations.map(mapOperationFromDb);
+    const transactions = dbOperations.map(q => mapOperationFromDb(q, account.currency));
 
     ctx.body = responseSuccess(transactions);
 });

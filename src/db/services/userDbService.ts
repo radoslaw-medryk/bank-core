@@ -17,6 +17,7 @@ class UserDbService {
 
             const sql = createUser(email, passwordHash);
             const userId = await sqlx.oneFirst(pool, sql);
+
             return toNumber(userId);
         } catch (e) {
             if (e instanceof UniqueIntegrityConstraintViolationError) {

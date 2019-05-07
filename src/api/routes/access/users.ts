@@ -5,7 +5,7 @@ import { validateStringLength, validateEmail } from "rusane/dist/validation";
 import Router from "koa-router";
 import { userDbService } from "@/db/services/userDbService";
 import { ApiRegisterUserResponse } from "@radoslaw-medryk/bank-core-shared";
-import { accountDbService } from "@/db/services/accountDbService";
+import { initNewUserDummyData } from "@/api/helpers/initNewUserDummyData";
 
 const r = new Router({
     prefix: "/api/v1/access/users",
@@ -29,7 +29,8 @@ r.post("/", async ctx => {
     );
 
     const userId = await userDbService.createUser(email, password);
-    const accountId = await accountDbService.createAccount(userId, "usd");
+
+    await initNewUserDummyData(userId); // TODO [RM]: TEMP, TEST only
 
     const response: ApiRegisterUserResponse = {
         userId: userId,
