@@ -22,6 +22,7 @@ export const createSql = storedFunction({
     SELECT a.* FROM ${UserAccountT} ua
     JOIN ${AccountT} a ON ua.${UserAccountP.accountId} = a.${AccountP.id}
     WHERE ua.${UserAccountP.userId} = _userId
+    ORDER BY a.${AccountP.id}
 `;
 
 export const getUserAccounts = (userId: UserDbId) => {
