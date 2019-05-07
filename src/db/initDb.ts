@@ -1,9 +1,9 @@
 import { seedTestData } from "./seedTestData";
-import { seedInitData } from "./seedInitData";
 import { pool } from ".";
 import { sqlx } from "slonix";
 import { modelCreateSqls } from "./models";
 import { storedCreateSqls } from "./stored";
+import { dbDataInitializer } from "./seedInitData";
 
 // TODO [RM]: Recreated fresh SQL database with fresh data on each call;
 // TODO [RM]: for DEV purposes only. For production needed different behavior.
@@ -21,6 +21,6 @@ export const initDb = async () => {
         }
     });
 
-    const initData = await seedInitData();
+    const initData = await dbDataInitializer.getInitData();
     await seedTestData(initData);
 };

@@ -43,7 +43,7 @@ r.post("/", requireJwt, async ctx => {
         friendAccountId = await accountDbService.createUserAccount(friendUserId, currency);
     }
 
-    await operationDbService.performTransfer(userAccountId, friendAccountId, amount, title, "transfer");
+    await operationDbService.performTransfer(userAccountId, friendAccountId, amount, title, "operation");
 
     const response: ApiTransferFriendResponse = {};
 
