@@ -1,4 +1,9 @@
 # JavaScript Open Bank
+
+<p align="center">
+  <img src="bank-proj.gif" width="320" height="568">
+</p>
+
 This project is an open source, full stack para-bank application. It features mobile-first design, allows multiple currencies and performing transactions between users. It is using TypeScript on both front- and back-end for clean and scalable development.
 
 **For convenience, demo application is deployed and accessible here (so far mobile-only):**
