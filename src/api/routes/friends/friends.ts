@@ -6,6 +6,9 @@ import Router from "koa-router";
 import { requireJwt } from "../../requireJwt";
 import { friendDbService } from "@/db/services/friendDbService";
 import { mapFriendFromDb } from "@/api/map/mapFriendFromDb";
+import { validateEmail } from "rusane/dist/validation";
+import { ApiAddFriendResponse } from "@radoslaw-medryk/bank-core-shared";
+import { userDbService } from "@/db/services/userDbService";
 
 const r = new Router({
     prefix: "/api/v1/friends",
@@ -19,6 +22,19 @@ r.get("/", requireJwt, async ctx => {
     const friends = dbFriends.map(mapFriendFromDb);
 
     ctx.body = responseSuccess(friends);
+});
+
+// TODO [RM]: swagger
+r.post("/", requireJwt, async ctx => {
+    const userId = check(ctx.state.token, "sub", Parsing.parseNumber, validateNumberId);
+
+    const email = check(ctx.request.body, "email", Parsing.parseString, validateEmail);
+    const friendUser = await userDbService.getUserByEmail(email);
+
+    const friendId = await friendDbService.makeFriend(userId, friendUser.id);
+
+    const response: ApiAddFriendResponse = {};
+    ctx.body = responseSuccess(response);
 });
 
 export default r;

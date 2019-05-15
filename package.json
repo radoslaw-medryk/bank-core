@@ -15,7 +15,7 @@
     },
     "dependencies": {
         "@koa/cors": "^3.0.0",
-        "@radoslaw-medryk/bank-core-shared": "^0.1.18",
+        "@radoslaw-medryk/bank-core-shared": "^0.1.19",
         "@radoslaw-medryk/tslint": "^0.1.7",
         "@types/bcryptjs": "^2.4.2",
         "@types/big.js": "^4.0.5",

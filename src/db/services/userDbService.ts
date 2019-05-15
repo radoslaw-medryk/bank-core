@@ -40,6 +40,17 @@ class UserDbService {
         }
     };
 
+    public getUserByEmail = async (email: string): Promise<UserDb> => {
+        const sql = getUserByEmail(email);
+        const row = await sqlx.maybeOne(pool, sql);
+        if (row === null) {
+            throw new ResourceDoesntExistsError("user");
+        }
+
+        const userDb = userFromRow(row);
+        return userDb;
+    };
+
     public getUserByEmailAndPassword = async (email: string, password: string): Promise<UserDb> => {
         const sql = getUserByEmail(email);
         const row = await sqlx.maybeOne(pool, sql);
